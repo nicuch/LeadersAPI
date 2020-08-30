@@ -1,0 +1,5 @@
+name: ${project.artifactId}
+version: ${project.version}
+author: nicuch
+main: ro.nicuch.leaders.LeadersPlugin
+api-version: 1.13
