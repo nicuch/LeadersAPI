@@ -2,6 +2,7 @@ package ro.nicuch.leaders.tasks;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import ro.nicuch.leaders.api.LeadersTask;
@@ -64,15 +65,20 @@ public class PlayersLeadersTask implements LeadersTask {
     @Override
     public void run() {
         Set<String> excludedPlayers = this.taskDescription.getExcludedPlayers();
-        String displayNamePlaceholder = this.taskDescription.getDisplayname();
-        String displayValuePlaceholder = this.taskDescription.getDisplayValue();
-        String placeholder = this.taskDescription.getPlaceholder();
+        String displayNamePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayname());
+        String displayValuePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayValue());
+        String placeholder = ChatColor.stripColor(this.taskDescription.getPlaceholder());
+        String rationalPlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalPlaceholder());
+        String rationalRequirement = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalRequirement());
         LinkedList<RankData> unsortedList = new LinkedList<>();
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
             if (player.getName() == null)
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
+            if (this.taskDescription.getTaskType().isRational())
+                if (!PlaceholderAPI.setPlaceholders(player, rationalPlaceholder).equals(PlaceholderAPI.setPlaceholders(player, rationalRequirement)))
+                    continue;
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);
             String displayValue = PlaceholderAPI.setPlaceholders(player, displayValuePlaceholder);
             PlayerRankData playerRankData = new PlayerRankData(displayName, displayValue, PlaceholderAPI.setPlaceholders(player, placeholder), player);

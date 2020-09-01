@@ -1,14 +1,24 @@
 package ro.nicuch.leaders.api;
 
+import ro.nicuch.leaders.enums.ComparatorType;
+import ro.nicuch.leaders.enums.TaskType;
+
 import java.util.Set;
 
 public class TaskDescription {
-    private final String id, placeholder, displayName, displayValue, comparatorType, dateFormat, noDisplayName, noDisplayValue, taskType, incrementPlaceholder;
+    private final String id, placeholder,
+            displayName, displayValue,
+            dateFormat,
+            noDisplayName, noDisplayValue,
+            incrementPlaceholder,
+            rationalPlaceholder, rationalRequirement;
     private final boolean reverseOrder;
     private final int updateTime, cacheSize;
     private final Set<String> excludedPlayers;
+    private final TaskType taskType;
+    private final ComparatorType comparatorType;
 
-    protected TaskDescription(String id, String placeholder, String displayName, String displayValue, String noDisplayName, String noDisplayValue, boolean reverseOrder, int updateTime, String comparatorType, Set<String> excludedPlayers, int cacheSize, String dateFormat, String taskType, String incrementPlaceholder) {
+    protected TaskDescription(String id, String placeholder, String displayName, String displayValue, String noDisplayName, String noDisplayValue, boolean reverseOrder, int updateTime, ComparatorType comparatorType, Set<String> excludedPlayers, int cacheSize, String dateFormat, TaskType taskType, String incrementPlaceholder, String rationalPlaceholder, String rationalRequirement) {
         this.id = id;
         this.placeholder = placeholder;
         this.displayName = displayName;
@@ -23,6 +33,8 @@ public class TaskDescription {
         this.dateFormat = dateFormat;
         this.taskType = taskType;
         this.incrementPlaceholder = incrementPlaceholder;
+        this.rationalPlaceholder = rationalPlaceholder;
+        this.rationalRequirement = rationalRequirement;
     }
 
     public String getId() {
@@ -61,7 +73,7 @@ public class TaskDescription {
         return this.cacheSize;
     }
 
-    public String getComparatorType() {
+    public ComparatorType getComparatorType() {
         return this.comparatorType;
     }
 
@@ -87,11 +99,19 @@ public class TaskDescription {
         return this.dateFormat;
     }
 
-    public String getTaskType() {
+    public TaskType getTaskType() {
         return this.taskType;
     }
 
     public String getIncrementPlaceholder() {
         return this.incrementPlaceholder;
+    }
+
+    public String getRationalPlaceholder() {
+        return this.rationalPlaceholder;
+    }
+
+    public String getRationalRequirement() {
+        return this.rationalRequirement;
     }
 }

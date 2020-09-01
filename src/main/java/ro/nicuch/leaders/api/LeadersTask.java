@@ -9,4 +9,5 @@ public interface LeadersTask extends Runnable {
     RankData getRankData(int rank);
 
     Map<Integer, RankData> getRanksData();
+
 }

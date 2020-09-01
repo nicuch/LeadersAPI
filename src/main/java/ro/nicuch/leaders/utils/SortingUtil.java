@@ -2,6 +2,8 @@ package ro.nicuch.leaders.utils;
 
 import ro.nicuch.leaders.api.RankData;
 import ro.nicuch.leaders.api.TaskDescription;
+import ro.nicuch.leaders.enums.ComparatorType;
+import ro.nicuch.leaders.enums.TaskType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,12 +16,12 @@ import java.util.stream.Collectors;
 public class SortingUtil {
 
     public static LinkedList<RankData> sortPlayerData(TaskDescription taskDescription, LinkedList<RankData> unsortedList) {
-        String comparatorType = taskDescription.getComparatorType().toLowerCase();
-        if (taskDescription.getTaskType().equalsIgnoreCase("groups-count") || taskDescription.getTaskType().equalsIgnoreCase("groups-sort")
-                || taskDescription.getTaskType().equalsIgnoreCase("groups-increment"))
-            comparatorType = "integer";
+        ComparatorType comparatorType = taskDescription.getComparatorType();
+        if (taskDescription.getTaskType() == TaskType.GROUPS_COUNT || taskDescription.getTaskType() == TaskType.GROUPS_SORT
+                || taskDescription.getTaskType() == TaskType.GROUPS_INCREMENT)
+            comparatorType = ComparatorType.INTEGER_COMPARATOR;
         switch (comparatorType) {
-            case "integer":
+            case INTEGER_COMPARATOR:
                 return unsortedList
                         .stream()
                         .sorted(reverseOrder(taskDescription.isReverseOrder(), (o1, o2) -> {
@@ -32,7 +34,7 @@ public class SortingUtil {
                             }
                             return -1;
                         })).collect(Collectors.toCollection(LinkedList::new));
-            case "double":
+            case DOUBLE_COMPARATOR:
                 return unsortedList
                         .stream()
                         .sorted(reverseOrder(taskDescription.isReverseOrder(), (o1, o2) -> {
@@ -45,7 +47,7 @@ public class SortingUtil {
                             }
                             return -1;
                         })).collect(Collectors.toCollection(LinkedList::new));
-            case "long":
+            case LONG_COMPARATOR:
                 return unsortedList
                         .stream()
                         .sorted(reverseOrder(taskDescription.isReverseOrder(), (o1, o2) -> {
@@ -58,7 +60,7 @@ public class SortingUtil {
                             }
                             return -1;
                         })).collect(Collectors.toCollection(LinkedList::new));
-            case "date":
+            case DATE_COMPARATOR:
                 return unsortedList
                         .stream()
                         .sorted(reverseOrder(taskDescription.isReverseOrder(), (o1, o2) -> {
@@ -72,7 +74,7 @@ public class SortingUtil {
                             }
                             return -1;
                         })).collect(Collectors.toCollection(LinkedList::new));
-            case "string":
+            case STRING_COMPARATOR:
             default:
                 return unsortedList
                         .stream()

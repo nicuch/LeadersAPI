@@ -2,13 +2,13 @@ package ro.nicuch.leaders.tasks;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import ro.nicuch.leaders.api.LeadersTask;
 import ro.nicuch.leaders.api.RankData;
 import ro.nicuch.leaders.api.TaskDescription;
 import ro.nicuch.leaders.data.GroupRankData;
-import ro.nicuch.leaders.utils.IncrementalInteger;
 import ro.nicuch.leaders.utils.SortingUtil;
 
 import java.util.*;
@@ -65,9 +65,11 @@ public class GroupSortLeadersTask implements LeadersTask {
     @Override
     public void run() {
         Set<String> excludedPlayers = this.taskDescription.getExcludedPlayers();
-        String displayNamePlaceholder = this.taskDescription.getDisplayname();
-        String displayValuePlaceholder = this.taskDescription.getDisplayValue();
-        String placeholder = this.taskDescription.getPlaceholder();
+        String displayNamePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayname());
+        String displayValuePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayValue());
+        String placeholder = ChatColor.stripColor(this.taskDescription.getPlaceholder());
+        String rationalPlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalPlaceholder());
+        String rationalRequirement = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalRequirement());
 
         Map<String, String> existentialMap = new HashMap<>();
 
@@ -77,6 +79,9 @@ public class GroupSortLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
+            if (this.taskDescription.getTaskType().isRational())
+                if (!PlaceholderAPI.setPlaceholders(player, rationalPlaceholder).equals(PlaceholderAPI.setPlaceholders(player, rationalRequirement)))
+                    continue;
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);
             String displayValue = PlaceholderAPI.setPlaceholders(player, displayValuePlaceholder);
             GroupRankData playerRankData = new GroupRankData(displayName, displayValue, PlaceholderAPI.setPlaceholders(player, placeholder), player);

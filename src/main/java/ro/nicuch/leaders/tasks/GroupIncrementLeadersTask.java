@@ -2,6 +2,7 @@ package ro.nicuch.leaders.tasks;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import ro.nicuch.leaders.api.LeadersTask;
@@ -65,10 +66,13 @@ public class GroupIncrementLeadersTask implements LeadersTask {
     @Override
     public void run() {
         Set<String> excludedPlayers = this.taskDescription.getExcludedPlayers();
-        String displayNamePlaceholder = this.taskDescription.getDisplayname();
-        String displayValuePlaceholder = this.taskDescription.getDisplayValue();
-        String placeholder = this.taskDescription.getPlaceholder();
-        String incrementPlaceholder = this.taskDescription.getIncrementPlaceholder();
+        String displayNamePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayname());
+        String displayValuePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayValue());
+        String placeholder = ChatColor.stripColor(this.taskDescription.getPlaceholder());
+        String rationalPlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalPlaceholder());
+        String rationalRequirement = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalRequirement());
+
+        String incrementPlaceholder = ChatColor.stripColor(this.taskDescription.getIncrementPlaceholder());
 
         Map<String, IncrementalInteger> incementalMap = new HashMap<>();
 
@@ -77,6 +81,9 @@ public class GroupIncrementLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
+            if (this.taskDescription.getTaskType().isRational())
+                if (!PlaceholderAPI.setPlaceholders(player, rationalPlaceholder).equals(PlaceholderAPI.setPlaceholders(player, rationalRequirement)))
+                    continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             String incrementPlaceholderGroup = PlaceholderAPI.setPlaceholders(player, incrementPlaceholder);
             if (incementalMap.containsKey(placeholderGroup)) {
@@ -100,6 +107,9 @@ public class GroupIncrementLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
+            if (this.taskDescription.getTaskType().isRational())
+                if (!PlaceholderAPI.setPlaceholders(player, this.taskDescription.getRationalPlaceholder()).equals(this.taskDescription.getRationalRequirement()))
+                    continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             int count = incementalMap.get(placeholderGroup).get();
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);
