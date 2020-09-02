@@ -74,7 +74,7 @@ public class PlayersLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+            if (!this.taskDescription.getTaskRequirements().checkRequirements(player))
                 continue;
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);
             String displayValue = PlaceholderAPI.setPlaceholders(player, displayValuePlaceholder);

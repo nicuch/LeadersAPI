@@ -3,7 +3,7 @@ package ro.nicuch.leaders.data.requirments;
 import org.bukkit.OfflinePlayer;
 import ro.nicuch.leaders.enums.RequirmentType;
 
-public abstract class RequirementString extends Requirement {
+public abstract class RequirementString extends AbstractRequirement {
     private final String input;
     private final String output;
 

@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import ro.nicuch.leaders.api.LeadersAPI;
 import ro.nicuch.leaders.api.RankData;
-import ro.nicuch.leaders.api.RequirementBuilder;
+import ro.nicuch.leaders.api.TaskRequirementBuilder;
 import ro.nicuch.leaders.api.TaskDescriptionBuilder;
 import ro.nicuch.leaders.data.requirments.RequirementComparator;
 import ro.nicuch.leaders.enums.ComparatorType;
@@ -23,11 +23,11 @@ public class LeadersPlugin extends JavaPlugin implements Listener {
                 .setDisplayValue("%vault_eco_balance_formatted%")
                 .setPlaceholder("%vault_eco_balance%")
                 .setUpdateTime(30)
-                .setComparatorType(ComparatorType.DOUBLE_COMPARATOR)
+                .setComparatorType(ComparatorType.NUMBER_COMPARATOR)
                 .setTaskType(TaskType.PLAYERS_SORT)
-                .setRationalRequirements(
-                        new RequirementBuilder()
-                                .addComparatorRequirement(new RequirementComparator("string-equals", ">=", "%vault_eco_balance%", "500"))
+                .setTaskRequirements(
+                        new TaskRequirementBuilder()
+                                .addComparatorRequirement(new RequirementComparator("comparator", "<=", "%vault_eco_balance%", "500").setInverted(true))
                                 .build()
                 );
         LeadersAPI.registerLeaderTask(new PlayersLeadersTask(taskDescriptionBuilder.build()), this);
@@ -41,14 +41,14 @@ public class LeadersPlugin extends JavaPlugin implements Listener {
         if (event.isSneaking())
             return;
         RankData rank1 = LeadersAPI.getLeaderTask("test").getRankData(1);
-        event.getPlayer().sendMessage("Rank: 1 / group: " + rank1.getDisplayName() + " count: " + rank1.getDisplayValue());
+        event.getPlayer().sendMessage("Rank: 1 / name: " + rank1.getDisplayName() + " value: " + rank1.getDisplayValue());
         RankData rank2 = LeadersAPI.getLeaderTask("test").getRankData(2);
-        event.getPlayer().sendMessage("Rank: 2 / group: " + rank2.getDisplayName() + " count: " + rank2.getDisplayValue());
+        event.getPlayer().sendMessage("Rank: 2 / name: " + rank2.getDisplayName() + " value: " + rank2.getDisplayValue());
         RankData rank3 = LeadersAPI.getLeaderTask("test").getRankData(3);
-        event.getPlayer().sendMessage("Rank: 3 / group: " + rank3.getDisplayName() + " count: " + rank3.getDisplayValue());
+        event.getPlayer().sendMessage("Rank: 3 / name: " + rank3.getDisplayName() + " value: " + rank3.getDisplayValue());
         RankData rank4 = LeadersAPI.getLeaderTask("test").getRankData(4);
-        event.getPlayer().sendMessage("Rank: 4 / group: " + rank4.getDisplayName() + " count: " + rank4.getDisplayValue());
+        event.getPlayer().sendMessage("Rank: 4 / name: " + rank4.getDisplayName() + " value: " + rank4.getDisplayValue());
         RankData rank5 = LeadersAPI.getLeaderTask("test").getRankData(5);
-        event.getPlayer().sendMessage("Rank: 5 / group: " + rank5.getDisplayName() + " count: " + rank5.getDisplayValue());
+        event.getPlayer().sendMessage("Rank: 5 / name: " + rank5.getDisplayName() + " value: " + rank5.getDisplayValue());
     }
 }

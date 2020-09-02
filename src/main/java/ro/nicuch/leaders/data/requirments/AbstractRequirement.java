@@ -3,12 +3,12 @@ package ro.nicuch.leaders.data.requirments;
 import org.bukkit.OfflinePlayer;
 import ro.nicuch.leaders.enums.RequirmentType;
 
-public abstract class Requirement {
+public abstract class AbstractRequirement {
     private final RequirmentType requirementType;
     private final String requirementName;
     private boolean inverted = false;
 
-    public Requirement(RequirmentType requirementType, String requirementName) {
+    public AbstractRequirement(RequirmentType requirementType, String requirementName) {
         this.requirementType = requirementType;
         this.requirementName = requirementName;
     }
@@ -25,8 +25,10 @@ public abstract class Requirement {
         return this.inverted;
     }
 
-    public final void setInverted(boolean inverted) {
+    @SuppressWarnings("unchecked")
+    public final <T extends AbstractRequirement> T setInverted(boolean inverted) {
         this.inverted = inverted;
+        return (T) this;
     }
 
     public abstract boolean checkRequirement(OfflinePlayer player);

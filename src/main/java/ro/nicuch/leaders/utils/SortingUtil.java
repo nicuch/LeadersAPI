@@ -5,6 +5,7 @@ import ro.nicuch.leaders.api.TaskDescription;
 import ro.nicuch.leaders.enums.ComparatorType;
 import ro.nicuch.leaders.enums.TaskType;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -19,42 +20,16 @@ public class SortingUtil {
         ComparatorType comparatorType = taskDescription.getComparatorType();
         if (taskDescription.getTaskType() == TaskType.GROUPS_COUNT || taskDescription.getTaskType() == TaskType.GROUPS_SORT
                 || taskDescription.getTaskType() == TaskType.GROUPS_INCREMENT)
-            comparatorType = ComparatorType.INTEGER_COMPARATOR;
+            comparatorType = ComparatorType.NUMBER_COMPARATOR;
         switch (comparatorType) {
-            case INTEGER_COMPARATOR:
+            case NUMBER_COMPARATOR:
                 return unsortedList
                         .stream()
                         .sorted(reverseOrder(taskDescription.isReverseOrder(), (o1, o2) -> {
                             try {
-                                int value1 = Integer.parseInt(o1.getValue());
-                                int value2 = Integer.parseInt(o2.getValue());
-                                return Integer.compare(value1, value2);
-                            } catch (NumberFormatException ex) {
-                                ex.printStackTrace();
-                            }
-                            return -1;
-                        })).collect(Collectors.toCollection(LinkedList::new));
-            case DOUBLE_COMPARATOR:
-                return unsortedList
-                        .stream()
-                        .sorted(reverseOrder(taskDescription.isReverseOrder(), (o1, o2) -> {
-                            try {
-                                double value1 = Double.parseDouble(o1.getValue());
-                                double value2 = Double.parseDouble(o2.getValue());
-                                return Double.compare(value1, value2);
-                            } catch (NumberFormatException ex) {
-                                ex.printStackTrace();
-                            }
-                            return -1;
-                        })).collect(Collectors.toCollection(LinkedList::new));
-            case LONG_COMPARATOR:
-                return unsortedList
-                        .stream()
-                        .sorted(reverseOrder(taskDescription.isReverseOrder(), (o1, o2) -> {
-                            try {
-                                long value1 = Long.parseLong(o1.getValue());
-                                long value2 = Long.parseLong(o2.getValue());
-                                return Long.compare(value1, value2);
+                                BigDecimal value1 = new BigDecimal(o1.getValue());
+                                BigDecimal value2 = new BigDecimal(o2.getValue());
+                                return value1.compareTo(value2);
                             } catch (NumberFormatException ex) {
                                 ex.printStackTrace();
                             }
@@ -69,7 +44,7 @@ public class SortingUtil {
                                 Date date1 = simpleDateFormat.parse(o1.getValue());
                                 Date date2 = simpleDateFormat.parse(o2.getValue());
                                 return date1.compareTo(date2);
-                            } catch (NumberFormatException | ParseException ex) {
+                            } catch (IllegalArgumentException | ParseException ex) {
                                 ex.printStackTrace();
                             }
                             return -1;

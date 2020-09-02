@@ -2,7 +2,6 @@ package ro.nicuch.leaders.enums;
 
 public enum RequirmentType {
     HAS_PERMISSION("has-permission"),
-    HAS_MONEY("has-money"),
     HAS_ITEM("has-item"),
     IS_NEAR("is-near"),
     JAVASCRIPT("javascript"),

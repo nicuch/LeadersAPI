@@ -5,12 +5,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import ro.nicuch.leaders.enums.RequirmentType;
 
-public class RequirementHasItem extends Requirement {
+public class RequirementHasItem extends AbstractRequirement {
     private final ItemStack itemStack;
 
     public RequirementHasItem(String name, ItemStack itemStack) {
         super(RequirmentType.HAS_PERMISSION, name);
         this.itemStack = itemStack;
+    }
+
+    public final ItemStack getItemStack() {
+        return this.itemStack;
     }
 
     @Override

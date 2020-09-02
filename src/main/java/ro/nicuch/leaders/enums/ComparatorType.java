@@ -2,9 +2,7 @@ package ro.nicuch.leaders.enums;
 
 public enum ComparatorType {
     STRING_COMPARATOR("string"),
-    INTEGER_COMPARATOR("integer"),
-    DOUBLE_COMPARATOR("double"),
-    LONG_COMPARATOR("long"),
+    NUMBER_COMPARATOR("number-comparator"),
     DATE_COMPARATOR("date");
 
     final String name;

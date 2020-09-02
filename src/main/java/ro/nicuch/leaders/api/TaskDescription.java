@@ -16,9 +16,9 @@ public class TaskDescription {
     private final Set<String> excludedPlayers;
     private final TaskType taskType;
     private final ComparatorType comparatorType;
-    private final RationalRequirement rationalRequirements;
+    private final TaskRequirement requirements;
 
-    protected TaskDescription(String id, String placeholder, String displayName, String displayValue, String noDisplayName, String noDisplayValue, boolean reverseOrder, int updateTime, ComparatorType comparatorType, Set<String> excludedPlayers, int cacheSize, String dateFormat, TaskType taskType, String incrementPlaceholder, RationalRequirement rationalRequirements) {
+    protected TaskDescription(String id, String placeholder, String displayName, String displayValue, String noDisplayName, String noDisplayValue, boolean reverseOrder, int updateTime, ComparatorType comparatorType, Set<String> excludedPlayers, int cacheSize, String dateFormat, TaskType taskType, String incrementPlaceholder, TaskRequirement requirements) {
         this.id = id;
         this.placeholder = placeholder;
         this.displayName = displayName;
@@ -33,7 +33,7 @@ public class TaskDescription {
         this.dateFormat = dateFormat;
         this.taskType = taskType;
         this.incrementPlaceholder = incrementPlaceholder;
-        this.rationalRequirements = rationalRequirements;
+        this.requirements = requirements;
     }
 
     public final String getId() {
@@ -106,8 +106,8 @@ public class TaskDescription {
         return this.incrementPlaceholder;
     }
 
-    public final RationalRequirement getRationalRequirements() {
-        return this.rationalRequirements;
+    public final TaskRequirement getTaskRequirements() {
+        return this.requirements;
     }
 
 }

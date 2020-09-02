@@ -4,23 +4,30 @@ import org.bukkit.OfflinePlayer;
 import ro.nicuch.leaders.enums.RequirmentType;
 import ro.nicuch.leaders.utils.PlaceholderUtils;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RequirementRegexMatches extends Requirement {
+public class RequirementRegexMatches extends AbstractRequirement {
     private final String input;
-    private final Pattern pattern;
+    private final String regex;
 
     public RequirementRegexMatches(String name, String input, String regex) {
         super(RequirmentType.STRING_EQUALS, name);
         this.input = input;
-        this.pattern = Pattern.compile(regex);
+        this.regex = regex;
+    }
+
+    public final String getInput() {
+        return this.input;
+    }
+
+    public final String getRegex() {
+        return this.regex;
     }
 
     @Override
     public boolean checkRequirement(OfflinePlayer player) {
         String inputString = PlaceholderUtils.setPlaceholders(player, this.input, true);
-        Matcher matcher = this.pattern.matcher(inputString);
-        return matcher.matches();
+        String regexString = PlaceholderUtils.setPlaceholders(player, this.regex, true);
+        return Pattern.matches(regexString, inputString);
     }
 }

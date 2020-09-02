@@ -69,15 +69,13 @@ public class GroupSortLeadersTask implements LeadersTask {
         String displayValuePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayValue());
         String placeholder = ChatColor.stripColor(this.taskDescription.getPlaceholder());
 
-        Map<String, String> existentialMap = new HashMap<>();
-
         LinkedList<RankData> unsortedList = new LinkedList<>();
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
             if (player.getName() == null)
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+            if (!this.taskDescription.getTaskRequirements().checkRequirements(player))
                 continue;
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);
             String displayValue = PlaceholderAPI.setPlaceholders(player, displayValuePlaceholder);

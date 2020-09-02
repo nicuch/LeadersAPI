@@ -5,7 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import ro.nicuch.leaders.enums.RequirmentType;
 
-public class RequirementIsNear extends Requirement {
+public class RequirementIsNear extends AbstractRequirement {
     private final Location location;
     private final double distance;
 
@@ -13,6 +13,14 @@ public class RequirementIsNear extends Requirement {
         super(RequirmentType.IS_NEAR, name);
         this.location = location;
         this.distance = distance;
+    }
+
+    public final Location getLocation() {
+        return this.location;
+    }
+
+    public final double getDistance() {
+        return this.distance;
     }
 
     @Override

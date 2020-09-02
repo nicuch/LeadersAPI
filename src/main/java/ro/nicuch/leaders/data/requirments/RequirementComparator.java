@@ -6,22 +6,18 @@ import ro.nicuch.leaders.utils.PlaceholderUtils;
 
 import java.math.BigDecimal;
 
-public class RequirementComparator extends Requirement {
+public class RequirementComparator extends RequirementString {
     private final String type;
-    private final String input;
-    private final String output;
 
     public RequirementComparator(String name, String type, String input, String output) {
-        super(RequirmentType.COMPARATOR, name);
+        super(RequirmentType.COMPARATOR, name, input, output);
         this.type = type;
-        this.input = input;
-        this.output = output;
     }
 
     @Override
     public boolean checkRequirement(OfflinePlayer player) {
-        String inputString = PlaceholderUtils.setPlaceholders(player, this.input, true);
-        String outputString = PlaceholderUtils.setPlaceholders(player, this.output, true);
+        String inputString = PlaceholderUtils.setPlaceholders(player, super.getInput(), true);
+        String outputString = PlaceholderUtils.setPlaceholders(player, super.getOutput(), true);
 
         BigDecimal inputDecimal = new BigDecimal(inputString);
         BigDecimal outputDecimal = new BigDecimal(outputString);

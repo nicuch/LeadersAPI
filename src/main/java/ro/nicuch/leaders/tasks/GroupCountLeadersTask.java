@@ -78,7 +78,7 @@ public class GroupCountLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+            if (!this.taskDescription.getTaskRequirements().checkRequirements(player))
                 continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             if (incementalMap.containsKey(placeholderGroup))
@@ -93,7 +93,7 @@ public class GroupCountLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+            if (!this.taskDescription.getTaskRequirements().checkRequirements(player))
                 continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             int count = incementalMap.get(placeholderGroup).get();
@@ -102,6 +102,7 @@ public class GroupCountLeadersTask implements LeadersTask {
             GroupRankData playerRankData = new GroupRankData(displayName, displayValue, "" + count, player);
             unsortedList.add(playerRankData);
         }
+        incementalMap.clear();
         this.taskLock.lock();
         try {
             int count = 0;

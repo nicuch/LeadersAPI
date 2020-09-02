@@ -18,89 +18,89 @@ public class TaskDescriptionBuilder {
     private Set<String> excludedPlayers = new HashSet<>();
     private TaskType taskType = TaskType.PLAYERS_SORT;
     private ComparatorType comparatorType = ComparatorType.STRING_COMPARATOR;
-    private RationalRequirement rationalRequirements = new RequirementBuilder().build();
+    private TaskRequirement requirements = new TaskRequirementBuilder().build();
 
     public TaskDescriptionBuilder(String id) {
         this.id = id;
     }
 
-    public TaskDescriptionBuilder setTaskType(TaskType taskType) {
+    public final TaskDescriptionBuilder setTaskType(TaskType taskType) {
         this.taskType = taskType;
         return this;
     }
 
-    public TaskDescriptionBuilder setPlaceholder(String placeholder) {
+    public final TaskDescriptionBuilder setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
         return this;
     }
 
-    public TaskDescriptionBuilder setDisplayName(String displayName) {
+    public final TaskDescriptionBuilder setDisplayName(String displayName) {
         this.displayName = displayName;
         return this;
     }
 
-    public TaskDescriptionBuilder setNoDisplayName(String noDisplayName) {
+    public final TaskDescriptionBuilder setNoDisplayName(String noDisplayName) {
         this.noDisplayName = noDisplayName;
         return this;
     }
 
-    public TaskDescriptionBuilder setDisplayValue(String displayValue) {
+    public final TaskDescriptionBuilder setDisplayValue(String displayValue) {
         this.displayValue = displayValue;
         return this;
     }
 
-    public TaskDescriptionBuilder setNoDisplayValue(String noDisplayValue) {
+    public final TaskDescriptionBuilder setNoDisplayValue(String noDisplayValue) {
         this.noDisplayValue = noDisplayValue;
         return this;
     }
 
-    public TaskDescriptionBuilder setReverse(boolean reverseOrder) {
+    public final TaskDescriptionBuilder setReverse(boolean reverseOrder) {
         this.reverseOrder = reverseOrder;
         return this;
     }
 
-    public TaskDescriptionBuilder setUpdateTime(int updateTime) {
+    public final TaskDescriptionBuilder setUpdateTime(int updateTime) {
         this.updateTime = updateTime;
         return this;
     }
 
-    public TaskDescriptionBuilder setComparatorType(ComparatorType comparatorType) {
+    public final TaskDescriptionBuilder setComparatorType(ComparatorType comparatorType) {
         this.comparatorType = comparatorType;
         return this;
     }
 
-    public TaskDescriptionBuilder setExcludedPlayers(Set<String> excludedPlayers) {
+    public final TaskDescriptionBuilder setExcludedPlayers(Set<String> excludedPlayers) {
         this.excludedPlayers = excludedPlayers;
         return this;
     }
 
-    public TaskDescriptionBuilder setCacheSize(int cacheSize) {
+    public final TaskDescriptionBuilder setCacheSize(int cacheSize) {
         this.cacheSize = cacheSize;
         return this;
     }
 
-    public TaskDescriptionBuilder setDateFormat(String dateFormat) {
+    public final TaskDescriptionBuilder setDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
         return this;
     }
 
-    public TaskDescriptionBuilder setIncrementPlaceholder(String incrementPlaceholder) {
+    public final TaskDescriptionBuilder setIncrementPlaceholder(String incrementPlaceholder) {
         this.incrementPlaceholder = incrementPlaceholder;
         return this;
     }
 
-    public TaskDescriptionBuilder setRationalRequirements(RationalRequirement rationalRequirements) {
-        this.rationalRequirements = rationalRequirements;
+    public final TaskDescriptionBuilder setTaskRequirements(TaskRequirement requirements) {
+        this.requirements = requirements;
         return this;
     }
 
-    public TaskDescription build() {
+    public final TaskDescription build() {
         return new TaskDescription(this.id, this.placeholder, this.displayName
                 , this.displayValue, this.noDisplayName
                 , this.noDisplayValue, this.reverseOrder
                 , this.updateTime, this.comparatorType
                 , this.excludedPlayers, this.cacheSize
                 , this.dateFormat, this.taskType
-                , this.incrementPlaceholder, this.rationalRequirements);
+                , this.incrementPlaceholder, this.requirements);
     }
 }
