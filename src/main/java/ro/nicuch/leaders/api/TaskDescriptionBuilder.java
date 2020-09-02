@@ -12,13 +12,13 @@ public class TaskDescriptionBuilder {
             displayValue = "none", placeholder = "",
             noDisplayName = "none", noDisplayValue = "none",
             dateFormat = "yyyy.MM.dd G 'at' HH:mm:ss z",
-            incrementPlaceholder = "",
-            rationalPlaceholder = "none", rationalRequirement = "true";
+            incrementPlaceholder = "";
     private boolean reverseOrder = false;
     private int updateTime = 30, cacheSize = 100;
     private Set<String> excludedPlayers = new HashSet<>();
     private TaskType taskType = TaskType.PLAYERS_SORT;
     private ComparatorType comparatorType = ComparatorType.STRING_COMPARATOR;
+    private RationalRequirement rationalRequirements = new RequirementBuilder().build();
 
     public TaskDescriptionBuilder(String id) {
         this.id = id;
@@ -89,13 +89,8 @@ public class TaskDescriptionBuilder {
         return this;
     }
 
-    public TaskDescriptionBuilder setRationalPlaceholder(String rationalPlaceholder) {
-        this.rationalPlaceholder = rationalPlaceholder;
-        return this;
-    }
-
-    public TaskDescriptionBuilder setRationalRequirement(String rationalRequirement) {
-        this.rationalRequirement = rationalRequirement;
+    public TaskDescriptionBuilder setRationalRequirements(RationalRequirement rationalRequirements) {
+        this.rationalRequirements = rationalRequirements;
         return this;
     }
 
@@ -106,6 +101,6 @@ public class TaskDescriptionBuilder {
                 , this.updateTime, this.comparatorType
                 , this.excludedPlayers, this.cacheSize
                 , this.dateFormat, this.taskType
-                , this.incrementPlaceholder, this.rationalPlaceholder, this.rationalRequirement);
+                , this.incrementPlaceholder, this.rationalRequirements);
     }
 }

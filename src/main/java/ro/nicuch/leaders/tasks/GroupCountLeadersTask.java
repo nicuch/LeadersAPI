@@ -9,6 +9,7 @@ import ro.nicuch.leaders.api.LeadersTask;
 import ro.nicuch.leaders.api.RankData;
 import ro.nicuch.leaders.api.TaskDescription;
 import ro.nicuch.leaders.data.GroupRankData;
+import ro.nicuch.leaders.enums.RankDataType;
 import ro.nicuch.leaders.utils.IncrementalInteger;
 import ro.nicuch.leaders.utils.SortingUtil;
 
@@ -69,8 +70,6 @@ public class GroupCountLeadersTask implements LeadersTask {
         String displayNamePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayname());
         String displayValuePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayValue());
         String placeholder = ChatColor.stripColor(this.taskDescription.getPlaceholder());
-        String rationalPlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalPlaceholder());
-        String rationalRequirement = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalRequirement());
 
         Map<String, IncrementalInteger> incementalMap = new HashMap<>();
 
@@ -79,9 +78,8 @@ public class GroupCountLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (this.taskDescription.getTaskType().isRational())
-                if (!PlaceholderAPI.setPlaceholders(player, rationalPlaceholder).equals(PlaceholderAPI.setPlaceholders(player, rationalRequirement)))
-                    continue;
+            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+                continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             if (incementalMap.containsKey(placeholderGroup))
                 incementalMap.get(placeholderGroup).increment(1);
@@ -95,9 +93,8 @@ public class GroupCountLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (this.taskDescription.getTaskType().isRational())
-                if (!PlaceholderAPI.setPlaceholders(player, this.taskDescription.getRationalPlaceholder()).equals(this.taskDescription.getRationalRequirement()))
-                    continue;
+            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+                continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             int count = incementalMap.get(placeholderGroup).get();
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);
@@ -113,7 +110,7 @@ public class GroupCountLeadersTask implements LeadersTask {
             this.onlineData.clear();
             List<RankData> rankedList = new ArrayList<>();
             for (RankData sortedRankData : SortingUtil.sortPlayerData(this.taskDescription, unsortedList)) {
-                if (!(sortedRankData instanceof GroupRankData))
+                if (sortedRankData.getRankDataType() != RankDataType.GROUP)
                     continue;
                 GroupRankData groupRankData = (GroupRankData) sortedRankData;
                 if (!rankedList.contains(sortedRankData)) {

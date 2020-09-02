@@ -68,8 +68,6 @@ public class GroupSortLeadersTask implements LeadersTask {
         String displayNamePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayname());
         String displayValuePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayValue());
         String placeholder = ChatColor.stripColor(this.taskDescription.getPlaceholder());
-        String rationalPlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalPlaceholder());
-        String rationalRequirement = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalRequirement());
 
         Map<String, String> existentialMap = new HashMap<>();
 
@@ -79,9 +77,8 @@ public class GroupSortLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (this.taskDescription.getTaskType().isRational())
-                if (!PlaceholderAPI.setPlaceholders(player, rationalPlaceholder).equals(PlaceholderAPI.setPlaceholders(player, rationalRequirement)))
-                    continue;
+            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+                continue;
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);
             String displayValue = PlaceholderAPI.setPlaceholders(player, displayValuePlaceholder);
             GroupRankData playerRankData = new GroupRankData(displayName, displayValue, PlaceholderAPI.setPlaceholders(player, placeholder), player);

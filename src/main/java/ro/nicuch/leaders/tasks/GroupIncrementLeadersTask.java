@@ -69,8 +69,6 @@ public class GroupIncrementLeadersTask implements LeadersTask {
         String displayNamePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayname());
         String displayValuePlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getDisplayValue());
         String placeholder = ChatColor.stripColor(this.taskDescription.getPlaceholder());
-        String rationalPlaceholder = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalPlaceholder());
-        String rationalRequirement = ChatColor.translateAlternateColorCodes('&', this.taskDescription.getRationalRequirement());
 
         String incrementPlaceholder = ChatColor.stripColor(this.taskDescription.getIncrementPlaceholder());
 
@@ -81,9 +79,8 @@ public class GroupIncrementLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (this.taskDescription.getTaskType().isRational())
-                if (!PlaceholderAPI.setPlaceholders(player, rationalPlaceholder).equals(PlaceholderAPI.setPlaceholders(player, rationalRequirement)))
-                    continue;
+            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+                continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             String incrementPlaceholderGroup = PlaceholderAPI.setPlaceholders(player, incrementPlaceholder);
             if (incementalMap.containsKey(placeholderGroup)) {
@@ -107,9 +104,8 @@ public class GroupIncrementLeadersTask implements LeadersTask {
                 continue;
             if (excludedPlayers.contains(player.getName()))
                 continue; // exclude
-            if (this.taskDescription.getTaskType().isRational())
-                if (!PlaceholderAPI.setPlaceholders(player, this.taskDescription.getRationalPlaceholder()).equals(this.taskDescription.getRationalRequirement()))
-                    continue;
+            if (!this.taskDescription.getRationalRequirements().checkRequirements(player))
+                continue;
             String placeholderGroup = PlaceholderAPI.setPlaceholders(player, placeholder);
             int count = incementalMap.get(placeholderGroup).get();
             String displayName = PlaceholderAPI.setPlaceholders(player, displayNamePlaceholder);

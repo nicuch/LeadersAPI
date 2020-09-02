@@ -2,14 +2,16 @@ package ro.nicuch.leaders.data;
 
 import org.bukkit.OfflinePlayer;
 import ro.nicuch.leaders.api.RankData;
+import ro.nicuch.leaders.enums.RankDataType;
 
-public class GroupRankData implements RankData {
+public class GroupRankData extends RankData {
     private final String displayName;
     private final String displayValue;
     private final String value;
     private final OfflinePlayer player;
 
     public GroupRankData(String displayName, String displayValue, String value, OfflinePlayer player) {
+        super(RankDataType.GROUP);
         this.displayName = displayName;
         this.displayValue = displayValue;
         this.value = value;

@@ -7,12 +7,12 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import ro.nicuch.leaders.api.LeadersAPI;
 import ro.nicuch.leaders.api.RankData;
+import ro.nicuch.leaders.api.RequirementBuilder;
 import ro.nicuch.leaders.api.TaskDescriptionBuilder;
+import ro.nicuch.leaders.data.requirments.RequirementComparator;
 import ro.nicuch.leaders.enums.ComparatorType;
 import ro.nicuch.leaders.enums.TaskType;
 import ro.nicuch.leaders.tasks.PlayersLeadersTask;
-
-import java.util.Collections;
 
 public class LeadersPlugin extends JavaPlugin implements Listener {
 
@@ -25,7 +25,11 @@ public class LeadersPlugin extends JavaPlugin implements Listener {
                 .setUpdateTime(30)
                 .setComparatorType(ComparatorType.DOUBLE_COMPARATOR)
                 .setTaskType(TaskType.PLAYERS_SORT)
-                .setExcludedPlayers(Collections.singleton("nicuch"));
+                .setRationalRequirements(
+                        new RequirementBuilder()
+                                .addComparatorRequirement(new RequirementComparator("string-equals", ">=", "%vault_eco_balance%", "500"))
+                                .build()
+                );
         LeadersAPI.registerLeaderTask(new PlayersLeadersTask(taskDescriptionBuilder.build()), this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }

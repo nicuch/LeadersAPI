@@ -10,15 +10,15 @@ public class TaskDescription {
             displayName, displayValue,
             dateFormat,
             noDisplayName, noDisplayValue,
-            incrementPlaceholder,
-            rationalPlaceholder, rationalRequirement;
+            incrementPlaceholder;
     private final boolean reverseOrder;
     private final int updateTime, cacheSize;
     private final Set<String> excludedPlayers;
     private final TaskType taskType;
     private final ComparatorType comparatorType;
+    private final RationalRequirement rationalRequirements;
 
-    protected TaskDescription(String id, String placeholder, String displayName, String displayValue, String noDisplayName, String noDisplayValue, boolean reverseOrder, int updateTime, ComparatorType comparatorType, Set<String> excludedPlayers, int cacheSize, String dateFormat, TaskType taskType, String incrementPlaceholder, String rationalPlaceholder, String rationalRequirement) {
+    protected TaskDescription(String id, String placeholder, String displayName, String displayValue, String noDisplayName, String noDisplayValue, boolean reverseOrder, int updateTime, ComparatorType comparatorType, Set<String> excludedPlayers, int cacheSize, String dateFormat, TaskType taskType, String incrementPlaceholder, RationalRequirement rationalRequirements) {
         this.id = id;
         this.placeholder = placeholder;
         this.displayName = displayName;
@@ -33,85 +33,81 @@ public class TaskDescription {
         this.dateFormat = dateFormat;
         this.taskType = taskType;
         this.incrementPlaceholder = incrementPlaceholder;
-        this.rationalPlaceholder = rationalPlaceholder;
-        this.rationalRequirement = rationalRequirement;
+        this.rationalRequirements = rationalRequirements;
     }
 
-    public String getId() {
+    public final String getId() {
         return this.id;
     }
 
-    public String getPlaceholder() {
+    public final String getPlaceholder() {
         return this.placeholder;
     }
 
-    public String getDisplayname() {
+    public final String getDisplayname() {
         return this.displayName;
     }
 
-    public String getDisplayValue() {
+    public final String getDisplayValue() {
         return this.displayValue;
     }
 
-    public String getNoDisplayName() {
+    public final String getNoDisplayName() {
         return this.noDisplayName;
     }
 
-    public String getNoDisplayValue() {
+    public final String getNoDisplayValue() {
         return this.noDisplayValue;
     }
 
-    public boolean isReverseOrder() {
+    public final boolean isReverseOrder() {
         return this.reverseOrder;
     }
 
-    public int getUpdateTime() {
+    public final int getUpdateTime() {
         return this.updateTime;
     }
 
-    public int getCacheSize() {
+    public final int getCacheSize() {
         return this.cacheSize;
     }
 
-    public ComparatorType getComparatorType() {
+    public final ComparatorType getComparatorType() {
         return this.comparatorType;
     }
 
-    public Set<String> getExcludedPlayers() {
+    public final Set<String> getExcludedPlayers() {
         return this.excludedPlayers;
     }
 
-    public boolean excludePlayer(String player) {
+    public final boolean excludePlayer(String player) {
         if (this.excludedPlayers.contains(player))
             return false;
         this.excludedPlayers.add(player);
         return true;
     }
 
-    public boolean includePlayer(String player) {
+    public final boolean includePlayer(String player) {
         if (!this.excludedPlayers.contains(player))
             return false;
         this.excludedPlayers.remove(player);
         return true;
     }
 
-    public String getDateFormat() {
+    public final String getDateFormat() {
         return this.dateFormat;
     }
 
-    public TaskType getTaskType() {
+    public final TaskType getTaskType() {
         return this.taskType;
     }
 
-    public String getIncrementPlaceholder() {
+    public final String getIncrementPlaceholder() {
         return this.incrementPlaceholder;
     }
 
-    public String getRationalPlaceholder() {
-        return this.rationalPlaceholder;
+    public final RationalRequirement getRationalRequirements() {
+        return this.rationalRequirements;
     }
 
-    public String getRationalRequirement() {
-        return this.rationalRequirement;
-    }
 }

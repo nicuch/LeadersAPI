@@ -1,10 +1,21 @@
 package ro.nicuch.leaders.api;
 
-public interface RankData {
+import ro.nicuch.leaders.enums.RankDataType;
 
-    String getDisplayName();
+public abstract class RankData {
+    private final RankDataType rankDataType;
 
-    String getDisplayValue();
+    public RankData(RankDataType rankDataType) {
+        this.rankDataType = rankDataType;
+    }
 
-    String getValue();
+    public final RankDataType getRankDataType() {
+        return this.rankDataType;
+    }
+
+    public abstract String getDisplayName();
+
+    public abstract String getDisplayValue();
+
+    public abstract String getValue();
 }
