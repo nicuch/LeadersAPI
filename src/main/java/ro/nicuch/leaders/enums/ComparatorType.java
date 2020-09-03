@@ -19,6 +19,6 @@ public enum ComparatorType {
         for (ComparatorType comparatorType : ComparatorType.values())
             if (comparatorType.getName().equalsIgnoreCase(name))
                 return comparatorType;
-        return null;
+        return STRING_COMPARATOR;
     }
 }

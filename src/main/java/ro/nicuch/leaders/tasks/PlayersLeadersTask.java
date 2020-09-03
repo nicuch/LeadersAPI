@@ -5,10 +5,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import ro.nicuch.leaders.api.LeadersTask;
 import ro.nicuch.leaders.api.RankData;
 import ro.nicuch.leaders.api.TaskDescription;
 import ro.nicuch.leaders.data.PlayerRankData;
+import ro.nicuch.leaders.enums.TaskType;
 import ro.nicuch.leaders.utils.SortingUtil;
 
 import java.util.*;
@@ -21,16 +23,18 @@ public class PlayersLeadersTask implements LeadersTask {
     private final ReentrantLock taskLock = new ReentrantLock();
 
     public PlayersLeadersTask(TaskDescription taskDescription) {
+        if (taskDescription.getTaskType() != TaskType.PLAYERS_SORT)
+            throw new IllegalArgumentException("Illegal task type for task description!");
         this.taskDescription = taskDescription;
     }
 
     @Override
-    public TaskDescription getTaskDescription() {
+    public @NotNull TaskDescription getTaskDescription() {
         return this.taskDescription;
     }
 
     @Override
-    public PlayerRankData getRankData(int rank) {
+    public @NotNull PlayerRankData getRankData(int rank) {
         this.taskLock.lock();
         try {
             if (!this.rankData.containsKey(rank))
@@ -53,7 +57,7 @@ public class PlayersLeadersTask implements LeadersTask {
     }
 
     @Override
-    public Map<Integer, RankData> getRanksData() {
+    public @NotNull Map<Integer, RankData> getRanksData() {
         this.taskLock.lock();
         try {
             return Collections.unmodifiableMap(this.rankData);

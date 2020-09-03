@@ -1,13 +1,15 @@
 package ro.nicuch.leaders.api;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 
 public interface LeadersTask extends Runnable {
 
-    TaskDescription getTaskDescription();
+    @NotNull TaskDescription getTaskDescription();
 
-    RankData getRankData(int rank);
+    @NotNull RankData getRankData(int rank);
 
-    Map<Integer, RankData> getRanksData();
+    @NotNull Map<Integer, RankData> getRanksData();
 
 }

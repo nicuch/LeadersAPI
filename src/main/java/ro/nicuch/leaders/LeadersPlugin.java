@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import ro.nicuch.leaders.api.LeadersAPI;
+import ro.nicuch.leaders.api.LeadersTaskManager;
 import ro.nicuch.leaders.api.RankData;
 import ro.nicuch.leaders.api.TaskRequirementBuilder;
 import ro.nicuch.leaders.api.TaskDescriptionBuilder;
@@ -30,7 +30,7 @@ public class LeadersPlugin extends JavaPlugin implements Listener {
                                 .addComparatorRequirement(new RequirementComparator("comparator", "<=", "%vault_eco_balance%", "500").setInverted(true))
                                 .build()
                 );
-        LeadersAPI.registerLeaderTask(new PlayersLeadersTask(taskDescriptionBuilder.build()), this);
+        LeadersTaskManager.registerLeaderTask(new PlayersLeadersTask(taskDescriptionBuilder.build()), this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
@@ -40,15 +40,15 @@ public class LeadersPlugin extends JavaPlugin implements Listener {
             return;
         if (event.isSneaking())
             return;
-        RankData rank1 = LeadersAPI.getLeaderTask("test").getRankData(1);
+        RankData rank1 = LeadersTaskManager.getLeaderTask("test").getRankData(1);
         event.getPlayer().sendMessage("Rank: 1 / name: " + rank1.getDisplayName() + " value: " + rank1.getDisplayValue());
-        RankData rank2 = LeadersAPI.getLeaderTask("test").getRankData(2);
+        RankData rank2 = LeadersTaskManager.getLeaderTask("test").getRankData(2);
         event.getPlayer().sendMessage("Rank: 2 / name: " + rank2.getDisplayName() + " value: " + rank2.getDisplayValue());
-        RankData rank3 = LeadersAPI.getLeaderTask("test").getRankData(3);
+        RankData rank3 = LeadersTaskManager.getLeaderTask("test").getRankData(3);
         event.getPlayer().sendMessage("Rank: 3 / name: " + rank3.getDisplayName() + " value: " + rank3.getDisplayValue());
-        RankData rank4 = LeadersAPI.getLeaderTask("test").getRankData(4);
+        RankData rank4 = LeadersTaskManager.getLeaderTask("test").getRankData(4);
         event.getPlayer().sendMessage("Rank: 4 / name: " + rank4.getDisplayName() + " value: " + rank4.getDisplayValue());
-        RankData rank5 = LeadersAPI.getLeaderTask("test").getRankData(5);
+        RankData rank5 = LeadersTaskManager.getLeaderTask("test").getRankData(5);
         event.getPlayer().sendMessage("Rank: 5 / name: " + rank5.getDisplayName() + " value: " + rank5.getDisplayValue());
     }
 }

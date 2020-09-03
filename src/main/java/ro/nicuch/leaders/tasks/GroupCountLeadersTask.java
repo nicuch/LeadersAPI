@@ -5,11 +5,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import ro.nicuch.leaders.api.LeadersTask;
 import ro.nicuch.leaders.api.RankData;
 import ro.nicuch.leaders.api.TaskDescription;
 import ro.nicuch.leaders.data.GroupRankData;
 import ro.nicuch.leaders.enums.RankDataType;
+import ro.nicuch.leaders.enums.TaskType;
 import ro.nicuch.leaders.utils.IncrementalInteger;
 import ro.nicuch.leaders.utils.SortingUtil;
 
@@ -23,16 +25,18 @@ public class GroupCountLeadersTask implements LeadersTask {
     private final ReentrantLock taskLock = new ReentrantLock();
 
     public GroupCountLeadersTask(TaskDescription taskDescription) {
+        if (taskDescription.getTaskType() != TaskType.GROUPS_COUNT)
+            throw new IllegalArgumentException("Illegal task type for task description!");
         this.taskDescription = taskDescription;
     }
 
     @Override
-    public TaskDescription getTaskDescription() {
+    public @NotNull TaskDescription getTaskDescription() {
         return this.taskDescription;
     }
 
     @Override
-    public GroupRankData getRankData(int rank) {
+    public @NotNull GroupRankData getRankData(int rank) {
         this.taskLock.lock();
         try {
             if (!this.rankData.containsKey(rank))
@@ -55,7 +59,7 @@ public class GroupCountLeadersTask implements LeadersTask {
     }
 
     @Override
-    public Map<Integer, RankData> getRanksData() {
+    public @NotNull Map<Integer, RankData> getRanksData() {
         this.taskLock.lock();
         try {
             return Collections.unmodifiableMap(this.rankData);

@@ -20,6 +20,6 @@ public enum TaskType {
         for (TaskType taskType : TaskType.values())
             if (taskType.getName().equalsIgnoreCase(name))
                 return taskType;
-        return null;
+        return PLAYERS_SORT;
     }
 }

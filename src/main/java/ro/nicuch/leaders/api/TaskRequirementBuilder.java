@@ -51,4 +51,8 @@ public class TaskRequirementBuilder {
     public final TaskRequirement build() {
         return new TaskRequirement(this.abstractRequirements);
     }
+
+    public static TaskRequirement empty() {
+        return new TaskRequirementBuilder().build();
+    }
 }

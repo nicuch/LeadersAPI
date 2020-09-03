@@ -6,7 +6,6 @@ import ro.nicuch.leaders.enums.RequirmentType;
 public abstract class AbstractRequirement {
     private final RequirmentType requirementType;
     private final String requirementName;
-    private boolean inverted = false;
 
     public AbstractRequirement(RequirmentType requirementType, String requirementName) {
         this.requirementType = requirementType;
@@ -22,12 +21,12 @@ public abstract class AbstractRequirement {
     }
 
     public final boolean isInverted() {
-        return this.inverted;
+        return this.requirementType.isInverted();
     }
 
     @SuppressWarnings("unchecked")
     public final <T extends AbstractRequirement> T setInverted(boolean inverted) {
-        this.inverted = inverted;
+        this.requirementType.setInverted(inverted);
         return (T) this;
     }
 

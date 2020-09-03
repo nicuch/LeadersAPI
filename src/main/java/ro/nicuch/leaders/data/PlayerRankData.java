@@ -1,6 +1,8 @@
 package ro.nicuch.leaders.data;
 
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ro.nicuch.leaders.api.RankData;
 import ro.nicuch.leaders.enums.RankDataType;
 
@@ -10,7 +12,7 @@ public class PlayerRankData extends RankData {
     private final String value;
     private final OfflinePlayer player;
 
-    public PlayerRankData(String displayName, String displayValue, String value, OfflinePlayer player) {
+    public PlayerRankData(@NotNull String displayName, @NotNull String displayValue, @NotNull String value, @Nullable OfflinePlayer player) {
         super(RankDataType.PLAYER);
         this.displayName = displayName;
         this.displayValue = displayValue;
@@ -19,20 +21,21 @@ public class PlayerRankData extends RankData {
     }
 
     @Override
-    public String getDisplayName() {
+    public @NotNull String getDisplayName() {
         return this.displayName;
     }
 
     @Override
-    public String getDisplayValue() {
+    public @NotNull String getDisplayValue() {
         return this.displayValue;
     }
 
     @Override
-    public String getValue() {
+    public @NotNull String getValue() {
         return this.value;
     }
 
+    @Nullable
     public OfflinePlayer getPlayer() {
         return this.player;
     }

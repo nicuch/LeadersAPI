@@ -19,8 +19,16 @@ public class RequirementComparator extends RequirementString {
         String inputString = PlaceholderUtils.setPlaceholders(player, super.getInput(), true);
         String outputString = PlaceholderUtils.setPlaceholders(player, super.getOutput(), true);
 
-        BigDecimal inputDecimal = new BigDecimal(inputString);
-        BigDecimal outputDecimal = new BigDecimal(outputString);
+        BigDecimal inputDecimal;
+        BigDecimal outputDecimal;
+        try {
+            inputDecimal = new BigDecimal(inputString);
+            outputDecimal = new BigDecimal(outputString);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            inputDecimal = new BigDecimal(0);
+            outputDecimal = new BigDecimal(0);
+        }
 
         switch (type) {
             case ">":
